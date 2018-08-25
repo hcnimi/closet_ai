@@ -102,7 +102,7 @@ export class CreateOutfits extends React.Component {
                   </Grid>
                 </Card.Content>
                 <Card.Content extra>
-                  <Button onClick={this.saveOutfit}>Save Outfit</Button>
+                  <Button positive onClick={this.saveOutfit}>Save Outfit</Button>
                 </Card.Content>
               </Card>
             </Grid.Column>
