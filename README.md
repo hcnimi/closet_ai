@@ -43,13 +43,6 @@ npm install
 bower install
 ```
 
-Get an [AccuWeather developer key](https://www.developer.accuweather.com/).
-
-Add the following to keys in src/server/config.js:
-```
-accuweatherKey: 'YOUR_KEY_HERE'
-```
-
 To start the server, run
 ```
 npm run server-dev
