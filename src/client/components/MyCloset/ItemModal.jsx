@@ -21,6 +21,10 @@ import {
   updateItemCategories,
   updateItemColors,
   updateItemBrands,
+  updateSelectedColors,
+  updateSelectedBrands,
+  updateSelectedCategories,
+  updateSelectedSeasons
 } from '../../actions/myFilterActions';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -63,7 +67,7 @@ class ItemModal extends React.Component {
 
   handleResponse(data) {
     this.props.actions.updateItemCategories(data.response.data.categories);
-    //this.props.actions.updateItemSeasons(itemSeasonsExample); // temp
+    this.props.actions.updateItemSeasons(data.response.data.seasons);
     this.props.actions.updateItemColors(data.response.data.colors);
     this.props.actions.updateItemBrands(data.response.data.brands);
     this.props.actions.updateAllItems(data.response.data.items, data.itemsArray);
@@ -82,6 +86,10 @@ class ItemModal extends React.Component {
       }).then((data) => {
       this.handleResponse(data);
     }).then(() => {
+      this.props.actions.updateSelectedSeasons([]);
+      this.props.actions.updateSelectedColors([]);
+      this.props.actions.updateSelectedCategories([]);
+      this.props.actions.updateSelectedBrands([]);
       this.close();
     }).catch((error) => {
       this.handleError(error);
@@ -95,6 +103,10 @@ class ItemModal extends React.Component {
       }).then((data) => {
       this.handleResponse(data);
     }).then(() => {
+      this.props.actions.updateSelectedSeasons([]);
+      this.props.actions.updateSelectedColors([]);
+      this.props.actions.updateSelectedCategories([]);
+      this.props.actions.updateSelectedBrands([]);
       this.close();
     }).catch((error) => {
       this.handleError(error);
@@ -298,7 +310,7 @@ class ItemModal extends React.Component {
                 <div>Date purchased:
                   <Input
                     type='date'
-                    name='purchaseDate'
+                    name='purchasedate'
                     icon={<Icon name='checkmark' link onClick={this.toggleItemPurchaseDate}/>}
                     defaultValue={this.props.currentModalItem.purchasedate}
                     onChange={this.handleChange}
@@ -371,6 +383,10 @@ const mapDispatchToProps = dispatch => ({
     updateItemCategories,
     updateItemColors,
     updateItemBrands,
+    updateSelectedColors,
+    updateSelectedBrands,
+    updateSelectedCategories,
+    updateSelectedSeasons,
   }, dispatch)
 });
 

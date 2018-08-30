@@ -76,10 +76,17 @@ export function toggleItemColorField(value) {
   };
 }
 
-export function updateItemValue(item) {
+function updateItemValueEffect(item) {
   return {
     type: UPDATE_ITEM_VALUE,
     item
+  };
+}
+
+export function updateItemValue(item) {
+  return (dispatch) => {
+    dispatch(updateItemValueEffect(item));
+    return Promise.resolve();
   };
 }
 

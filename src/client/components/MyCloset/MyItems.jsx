@@ -19,7 +19,7 @@ export class MyItems extends React.Component {
 }
 
   filteredView() {
-    return (
+    return (this.props.items) ? (
       <Grid.Row verticalAlign="middle" centered>
         {this.props.items.map((item) => (
           <Grid.Column key={item.id} mobile={16} computer={5} tablet={8} widescreen={5} largeScreen={5}>
@@ -31,7 +31,7 @@ export class MyItems extends React.Component {
           </Grid.Column>
         ))}
       </Grid.Row>
-    )
+    ) : <div>No results for the filters selected</div>
   }
 
   toggle(item) {
@@ -81,13 +81,15 @@ export class MyItems extends React.Component {
   }
 
   render() {
+    const items = this.props.items.length || Object.keys(this.props.items).length;
     return (
-      <Grid padded divided='vertically'>
-        {(this.props.items) ?
-          ((Array.isArray(this.props.items)) ? this.filteredView() : this.notFilteredView())
-          : (<div>{"Loading..."}</div>)
-        }
-      </Grid>
+        <Grid padded divided='vertically'>
+          {(items) ?
+            Array.isArray(this.props.items) ? this.filteredView() : this.notFilteredView()
+            :
+            <h2> No items to show </h2>
+          }
+        </Grid>
     );
   }
 }

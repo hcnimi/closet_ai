@@ -255,12 +255,16 @@ const dbHelpers = {
     organizedData.categories = [];
     organizedData.colors = [];
     organizedData.brands = [];
+    organizedData.styles = [];
     organizedData.rawCategories = [];
     organizedData.rawColors = [];
+    organizedData.rawStyles = [];
     organizedData.rawBrands = [];
     organizedData.allColors = [];
     organizedData.allStyles = [];
     organizedData.allCategories = [];
+    organizedData.rawSeasons = [];
+    organizedData.seasons = [];
     db.query(
       'SELECT ' +
       'i.id, i."itemName" as name, ' +
@@ -274,10 +278,15 @@ const dbHelpers = {
       'colors.name as color, ' +
       'colors.id as colorId, ' +
       'i."styleId" as styleId, ' +
-      'styles.name as style ' +
+      'styles.name as style, ' +
+      'ss."styleId" as styleId, ' +
+      'ss."seasonId" as seasonId, ' +
+      'seasons.name as season ' +
       'FROM items i ' +
       'INNER JOIN styles ON (i."styleId" = styles.id) ' +
       'INNER JOIN categories c ON (c.id = styles."categoryId") ' +
+      'INNER JOIN "stylesSeasons" ss ON (i."styleId" = ss."styleId") ' +
+      'INNER JOIN seasons on (ss."seasonId" = seasons.id) ' +
       'JOIN colors ON (colors.id = i."colorId"); ' +
       'SELECT DISTINCT c.name as category from items i, categories c ' +
       'JOIN styles s ON (s."categoryId" = c.id) ' +
@@ -306,6 +315,12 @@ const dbHelpers = {
         if (row.brand) {
           organizedData.rawBrands.push(row.brand);
         }
+        if (row.style) {
+          organizedData.rawStyles.push({style: row.style, styleCategory: row.styleCategoryId});
+        }
+        if (row.season) {
+          organizedData.rawSeasons.push(row.season);
+        }
         if (row.allColorsName) {
           organizedData.allColors.push({key: row.allColorsId, value: row.allColorsId, text: row.allColorsName});
         }
@@ -320,6 +335,8 @@ const dbHelpers = {
       organizedData.colors = dbHelpers.sortAndFilterData(organizedData.rawColors);
       organizedData.brands = dbHelpers.sortAndFilterData(organizedData.rawBrands);
       organizedData.categories = dbHelpers.sortAndFilterData(organizedData.rawCategories);
+      organizedData.styles = dbHelpers.sortAndFilterData(organizedData.rawStyles);
+      organizedData.seasons = dbHelpers.sortAndFilterData(organizedData.rawSeasons);
     }).then(() => {
       cb(organizedData);
     });
@@ -418,16 +435,19 @@ const dbHelpers = {
     })
   },
   editItem(item, cb) {
-    db.query(
-      'UPDATE items ' +
-      'SET "itemName"=\'' + item.name + '\', ' +
-      '"brandName"=\'' + item.brand + '\', ' +
-      '"colorId"=\'' + item.colorid + '\', ' +
-      '"styleId"=\'' + item.styleid + '\', ' +
-      'description=\'' + item.description + '\', ' +
-      '"purchaseDate"=\'' + item.purchasedate + '\', ' +
-      'price=\'' + item.price + '\' ' +
-      'WHERE id=\'' + item.id + '\';'
+    Item.update({
+      itemName: item.name,
+      brandName: item.brand,
+      colorId: item.colorid,
+      styleId: item.styleid,
+      description: item.description,
+      purchaseDate: item.purchasedate,
+      price: item.price
+      }, {
+        where: {
+          id: item.id,
+        }
+      }
     ).then(() => {
         this.getItems(null, cb);
     });

@@ -17,7 +17,7 @@ const initialState = {
   imageURL: '',
   barcode: '',
   status: false,
-  open: false,
+  modalOpen: false,
   results: [],
   styles: [],
   colors: [],
@@ -56,7 +56,7 @@ export function addItemReducer(state = initialState, action) {
       })
     case UPDATE_MODAL_STATE:
       return Object.assign({}, state, {
-        open: action.modalState
+        modalOpen: action.modalState
       })
     case CATCH_ERROR:
       return Object.assign({}, state, {

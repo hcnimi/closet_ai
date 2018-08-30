@@ -56,22 +56,32 @@ export class UploadItemInfo extends React.Component {
     };
 
     return (
-      <Modal
-        closeIcon
-        open={this.props.open}
-        onClose={this.closeModal}
-        closeOnDimmerClick={false}
-        trigger={<Button>Upload</Button>}
-        style={inlineStyle.modal}
-      >
-        <Modal.Content image>
-          <Image wrapped size='large' src={this.props.imageURL} />
-          <Modal.Description>
-            <UploadForm onSubmit={this.submitForm} styles={this.props.styles} colors={this.props.colors} close={this.closeModal}/>
-          </Modal.Description>
-        </Modal.Content>
-
-      </Modal>
+      <div>
+      {
+        this.props.imageURL ?
+        <div>
+        <Modal
+          closeIcon
+          closeOnDimmerClick={false}
+          open={this.props.modalOpen}
+          trigger={<Button>Upload</Button>}
+          onClose={this.closeModal}
+          open={this.props.modalOpen}
+          style={inlineStyle.modal}
+        >
+          <Modal.Content image>
+            <Image wrapped size='large' src={this.props.imageURL} />
+            <Modal.Description>
+              <UploadForm onSubmit={this.submitForm} styles={this.props.styles} colors={this.props.colors} close={this.closeModal}/>
+            </Modal.Description>
+            <Button onClick={this.closeModal}>Close</Button>
+          </Modal.Content>
+        </Modal>
+        </div>
+        :
+        <Button>Upload</Button>
+      }
+      </div>
     )
   }
 }
@@ -80,7 +90,7 @@ const mapStateToProps = state => ({
   imageURL: state.addItem.imageURL,
   styles: state.addItem.styles,
   colors: state.addItem.colors,
-  open: state.addItem.modalState,
+  modalOpen: state.addItem.modalState,
   error: state.addItem.error,
   formStates: getFormValues('Upload')(state)
 });

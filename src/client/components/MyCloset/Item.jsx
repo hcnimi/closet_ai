@@ -20,16 +20,15 @@ const Item = (props) => (
       >
       <Image src={props.item.url} draggable="false" centered/>
       <Card.Content>
-      <Card.Header><b>Name: </b>{
-        (props.item.name.length > 20 ) ?
-          props.item.name.substring(0, 20) + '...' : props.item.name }
+      <Card.Header><b>Name: </b>
+        {(props.item.name.length > 19 ) ?
+          props.item.name.substring(0, 19) + '...' : props.item.name }
       </Card.Header>
         <Card.Meta><b>Category: </b>{props.item.category}</Card.Meta>
+        <Card.Meta><b>Style: </b>{props.item.style}</Card.Meta>
       <Card.Meta><b>Brand: </b>{props.item.brand}</Card.Meta>
       <Card.Meta><b>Color: </b>{props.item.color}</Card.Meta>
       <Card.Description><b>Description: </b>{props.item.description}</Card.Description>
-      </Card.Content>
-      <Card.Content extra>
       </Card.Content>
     </Card>
   </div>

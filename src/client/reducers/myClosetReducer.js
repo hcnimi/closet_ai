@@ -14,7 +14,7 @@ const initialState = {
   currentMenuItem: 'All Items',
   allItems: {},
   allItemsArray: [],
-  selectedItems: {},
+  selectedItems: [],
   closetCategories: [],
   outfitCategories: [],
   filteredState: false,

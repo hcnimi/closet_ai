@@ -47,7 +47,7 @@ export class MyClosetItemsContainer extends React.Component {
         return {response, itemsArray};
       }).then((data) => {
       this.props.actions.updateItemCategories(data.response.data.categories);
-      this.props.actions.updateItemSeasons(itemSeasonsExample); // temp
+      this.props.actions.updateItemSeasons(data.response.data.seasons);
       this.props.actions.updateItemColors(data.response.data.colors);
       this.props.actions.updateItemBrands(data.response.data.brands);
       this.props.actions.updateAllItems(data.response.data.items, data.itemsArray);
@@ -101,31 +101,35 @@ export class MyClosetItemsContainer extends React.Component {
           structuredCategories: [],
           brands: [],
           structuredBrands: [],
+          styles: [],
+          structuredStyles: [],
         };
         const filterAndUpdateFilters =(item, filterType, filtersKey, structuredFiltersKey) => {
           if(filters[filtersKey].indexOf(item[filterType]) === -1) {
             filters[filtersKey].push(item[filterType]);
-            filters[structuredFiltersKey].push({key: item[filterType], value: item[filterType], text: item[filterType]});
+            if(filterType === 'style') {
+              filters[structuredFiltersKey].push({
+                key: item[filterType],
+                value: item[filterType],
+                text: item[filterType],
+                category: item.category
+              });
+            } else {
+              filters[structuredFiltersKey].push({
+                key: item[filterType],
+                value: item[filterType],
+                text: item[filterType]
+              });
+            }
           }
         };
-        const addSelectedValuesToFilters = (array, filtersKey, structuredFiltersKey) => {
-          array.forEach((filterValue) => {
-            if(filters[filtersKey].indexOf(filterValue) === -1) {
-              filters[filtersKey].push(filterValue);
-              filters[structuredFiltersKey].push({key: filterValue, value: filterValue, text: filterValue});
-            }
-        })};
         items.forEach(item => {
           filterAndUpdateFilters(item, 'category', 'categories', 'structuredCategories');
           filterAndUpdateFilters(item, 'color', 'colors', 'structuredColors');
-          //filterAndUpdateFilters(item, 'season', 'structuredSeasons'); // commented out for now
+          filterAndUpdateFilters(item, 'style', 'styles', 'structuredStyles');
+          filterAndUpdateFilters(item, 'season', 'structuredSeasons');
           filterAndUpdateFilters(item, 'brand', 'brands', 'structuredBrands');
         });
-        //  add previously selected options as well
-          addSelectedValuesToFilters(this.props.selectedCategories, 'categories', 'structuredCategories');
-          addSelectedValuesToFilters(this.props.selectedColors, 'colors', 'structuredColors');
-          //addSelectedValuesToFilters(this.props.selectedSeasons, 'seasons', 'structuredSeasons'); // commented out for now
-          addSelectedValuesToFilters(this.props.selectedBrands, 'brands', 'structuredBrands');
         resolve(filters);
       });
     };
@@ -139,9 +143,9 @@ export class MyClosetItemsContainer extends React.Component {
       if (this.props.selectedSeasons.length || this.props.selectedColors.length || this.props.selectedCategories.length) {
         this.props.actions.updateItemBrands(filters.structuredBrands);
       }
-      //if(this.props.selectedBrands.length || this.props.selectedColors.length || this.props.selectedCategories.length) {
-      //this.props.actions.updateItemSeasons(filters.structuredSeasons); // commented out for now
-      //}
+      if(this.props.selectedBrands.length || this.props.selectedColors.length || this.props.selectedCategories.length) {
+      this.props.actions.updateItemSeasons(filters.structuredSeasons); // commented out for now
+      }
     });
   }
 
@@ -162,8 +166,9 @@ export class MyClosetItemsContainer extends React.Component {
           return Promise.resolve(this.filterAndUpdateItems(filters.seasons, 'season', filteredItems));
         }).then((filteredItems) => {
         return Promise.resolve(this.filterAndUpdateItems(filters.brands, 'brand', filteredItems));
-      }).then((filteredItems) => {
-        this.props.actions.updateSelectedItems(filteredItems).then(this.updateFilters(filteredItems));
+        }).then((filteredItems) => {
+          this.props.actions.updateSelectedItems(filteredItems);
+          //then(this.updateFilters(filteredItems)
       });
     } else {
       this.props.actions.updateFilteredState(false);

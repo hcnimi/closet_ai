@@ -97,8 +97,7 @@ const UploadForm = (props) => {
           <Field
             name="date"
             component="input"
-            type="text"
-            placeholder="YYYY-MM-DD"
+            type="date"
           />
         </div>
       </div>
