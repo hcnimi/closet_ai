@@ -19,7 +19,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-const homePath = __dirname + '../../../dist';
+const homePath = path.resolve(__dirname, '../../dist');
 app.use(express.static(homePath));
 app.use('/signup', express.static(homePath));
 app.use((res, req, next) => {
@@ -207,7 +207,7 @@ app.get('/createdb', (req, res) => {
 });
 
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname + '../../../dist/index.html'));
+  res.sendFile(path.resolve(__dirname, '../../dist/index.html'));
 });
 
 app.listen(port, () => {
