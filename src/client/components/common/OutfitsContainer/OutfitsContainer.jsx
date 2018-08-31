@@ -24,6 +24,7 @@ class OutfitsContainer extends React.Component {
       </div>
     ) : (
       <div>
+        <br />
         {this.props.allOutfits.map(outfit => (
           <Outfit key={'outfit' + outfit.id} {...outfit} />
         ))}
