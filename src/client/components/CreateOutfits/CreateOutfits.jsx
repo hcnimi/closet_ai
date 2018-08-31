@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Grid, Card, Button } from 'semantic-ui-react';
+import { Grid, Card, Button, Input, Header } from 'semantic-ui-react';
 import MyClosetItemsContainer from '../MyCloset/MyClosetItemsContainer.jsx';
 import { updateSelectedOutfitItems } from '../../actions/createOutfitsActions.js';
 import Axios from 'axios';
@@ -12,6 +12,12 @@ export class CreateOutfits extends React.Component {
     super(props);
     this.onDrop = this.onDrop.bind(this);
     this.saveOutfit = this.saveOutfit.bind(this);
+    this.clearOutfit = this.clearOutfit.bind(this);
+    this.handleOutfitNameChange = this.handleOutfitNameChange.bind(this);
+
+    this.state = {
+      outfitName: ''
+    };
   }
 
   onDrop(event) {
@@ -65,26 +71,30 @@ export class CreateOutfits extends React.Component {
   }
 
   saveOutfit() {
-    console.log('save to db:', {
-      items: Object.keys(this.props.selectedItems).map(id => ({
-        id: parseInt(id)
-      })),
-      outfitProperties: {
-        name: 'testoutfit',
-        isFavorite: false,
-        s3PublicUrl: ''
-      }
-    });
+    let itemKeys = Object.keys(this.props.selectedItems);
+    if (itemKeys.length === 0) {
+      return;
+    }
     Axios.post('/api/saveoutfit', {
-      items: Object.keys(this.props.selectedItems).map(id => ({
+      items: itemKeys.map(id => ({
         id: parseInt(id)
       })),
       outfitProperties: {
-        name: 'testoutfit',
+        name: this.state.outfitName,
         isFavorite: false,
         s3PublicUrl: ''
       }
     });
+    this.setState({ outfitName: '' });
+    this.clearOutfit();
+  }
+
+  clearOutfit() {
+    this.props.actions.updateSelectedOutfitItems({});
+  }
+
+  handleOutfitNameChange(event) {
+    this.setState({ outfitName: event.target.value });
   }
 
   render() {
@@ -94,15 +104,38 @@ export class CreateOutfits extends React.Component {
           <Grid.Row>
             <Grid.Column width={6} stretched>
               <Card onDragOver={e => e.preventDefault()} onDrop={this.onDrop}>
+                <Card.Content extra>
+                  <Button positive onClick={this.saveOutfit}>
+                    Save Outfit
+                  </Button>
+                  <Button negative onClick={this.clearOutfit}>
+                    Clear Outfit
+                  </Button>
+                </Card.Content>
                 <Card.Content>
+                  <Input
+                    fluid
+                    placeholder="Outfit Name"
+                    value={this.state.outfitName}
+                    onChange={this.handleOutfitNameChange}
+                  />
                   <Grid padded centered>
-                    {this.props.selectedItems.length === 0
-                      ? 'Drag items here!'
-                      : this.displayOutfit()}
+                    {Object.keys(this.props.selectedItems).length === 0 ? (
+                      <Grid.Row>
+                        <Header size="small">Drag items here!</Header>
+                      </Grid.Row>
+                    ) : (
+                      this.displayOutfit()
+                    )}
                   </Grid>
                 </Card.Content>
                 <Card.Content extra>
-                  <Button positive onClick={this.saveOutfit}>Save Outfit</Button>
+                  <Button positive onClick={this.saveOutfit}>
+                    Save Outfit
+                  </Button>
+                  <Button negative onClick={this.clearOutfit}>
+                    Clear Outfit
+                  </Button>
                 </Card.Content>
               </Card>
             </Grid.Column>
