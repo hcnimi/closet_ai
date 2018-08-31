@@ -267,7 +267,7 @@ const dbHelpers = {
     organizedData.seasons = [];
     db.query(
       'SELECT ' +
-      'i.id, i."itemName" as name, ' +
+      'i.id as id, i."itemName" as name, ' +
       'i."brandName" as brand, ' +
       'i."s3PublicUrl" as url, ' +
       'i.price, ' +
@@ -351,7 +351,7 @@ const dbHelpers = {
       'outfits.id, name, "isFavorite", "s3PublicUrl", ARRAY_AGG("itemId") as itemIds ' +
       'FROM outfits ' +
       'LEFT JOIN "outfitsItems" ' +
-      'ON outfits.id = "outfitId" ' + 
+      'ON outfits.id = "outfitId" ' +
       'GROUP BY outfits.id ' +
       'ORDER BY outfits.id ',
       { type: db.QueryTypes.SELECT, raw: true }
@@ -464,16 +464,18 @@ const dbHelpers = {
         this.getItems(null, cb);
     });
   },
+  deleteOutfit(outfit, cb) {
+    db.query(
+      'DELETE from "outfitsItems" ' +
+      'WHERE id=\'' + outfit.id + '\';'
+    );
+  },
   deleteItem(item, cb) {
     db.query(
-      'DELETE from outfitsItems ' +
-      'WHERE id=\'' + id + '\';'
-    ).then(()=>{
-      db.query(        
         'DELETE from items ' +
         'WHERE id=\'' + item.id + '\';'
-      )
-    }).then(() => {
+    ).then(() => {
+      this.deleteOutfit(item, cb);
       this.getItems(null, cb);
     });
   }

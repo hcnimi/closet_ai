@@ -21,6 +21,7 @@ import {
   updateItemCategories,
   updateItemColors,
   updateItemBrands,
+  updateItemSeasons,
   updateSelectedColors,
   updateSelectedBrands,
   updateSelectedCategories,
@@ -29,7 +30,6 @@ import {
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {itemSeasonsExample} from "./ExampleData";
 import Axios from "axios/index";
 
 class ItemModal extends React.Component {
@@ -56,13 +56,15 @@ class ItemModal extends React.Component {
   }
 
   createItemsArray(response) {
-    let itemsArray = [];
-    for (let key in response.data.items) {
-      for(let i = 0; i < response.data.items[key].length; i++) {
-        itemsArray.push(response.data.items[key][i]);
+     return new Promise((resolve, reject) => {
+      let itemsArray = [];
+      for (let key in response.data.items) {
+        for(let i = 0; i < response.data.items[key].length; i++) {
+          itemsArray.push(response.data.items[key][i]);
+        }
       }
-    }
-    return {response, itemsArray};
+      resolve({response, itemsArray});
+    });
   }
 
   handleResponse(data) {
@@ -99,10 +101,11 @@ class ItemModal extends React.Component {
   deleteItem(item) {
     Axios.post('/removeitem', item)
       .then((response) => {
-        return this.createItemsArray(response);
+        return this.createItemsArray(response).then((data) => {
+            return {response: data.response, itemsArray: data.itemsArray};
+        });
       }).then((data) => {
       this.handleResponse(data);
-    }).then(() => {
       this.props.actions.updateSelectedSeasons([]);
       this.props.actions.updateSelectedColors([]);
       this.props.actions.updateSelectedCategories([]);
@@ -383,6 +386,7 @@ const mapDispatchToProps = dispatch => ({
     updateItemCategories,
     updateItemColors,
     updateItemBrands,
+    updateItemSeasons,
     updateSelectedColors,
     updateSelectedBrands,
     updateSelectedCategories,

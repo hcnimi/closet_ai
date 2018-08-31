@@ -34,7 +34,7 @@ export class MyCloset extends React.Component {
   }
 
   render() {
-   const { activeItem } = this.props.currentMenuItem || 'MyCloset';
+   const activeItem = this.props.currentMenuItem || 'All Items';
 
     return (
       <div>
@@ -50,8 +50,8 @@ export class MyCloset extends React.Component {
               />
             </Grid.Column>
             <Grid.Column mobile={16} computer={16} tablet={16} widescreen={13} largeScreen={13}>
-              {this.props.currentMenuItem.includes('Outfit') 
-                ? <OutfitsContainer /> 
+              {this.props.currentMenuItem.includes('Outfit')
+                ? <OutfitsContainer />
                 : <MyClosetItemsContainer/>}
             </Grid.Column>
           </Grid.Row>

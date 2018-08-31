@@ -1,12 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import MyItems from './MyItems.jsx';
 import { withRouter } from 'react-router-dom';
 import MyClosetFilters from './MyClosetFilters.jsx';
 import { bindActionCreators } from 'redux';
 import Axios from 'axios';
-import { itemSeasonsExample } from './ExampleData';
 import ItemModal from './ItemModal.jsx';
 import {
   updateItemBrands,

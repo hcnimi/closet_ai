@@ -74,7 +74,6 @@ app.post('/api/outfit', (req, res) => {
 });
 
 app.delete('/api/outfit', (req, res) => {
-  console.log(req.query)
   db.removeOutfit(req.query.id, 1);
   res.sendStatus(200);
 });

@@ -18,7 +18,7 @@ const Item = (props) => (
       onDragStart={e => e.dataTransfer.setData('id', props.item.id)}
       width='fluid'
       >
-      <Image src={props.item.url} draggable="false" centered/>
+      <Image src={props.item.url} draggable="false" centered size="large"/>
       <Card.Content>
       <Card.Header><b>Name: </b>
         {(props.item.name.length > 19 ) ?

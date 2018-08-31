@@ -9,32 +9,53 @@ export const MyClosetNavBar = (props) => (
       <Menu.Item  >
         <Menu.Header>My Closet</Menu.Header>
         <Menu.Menu>
-          {props.closetCategories.map((closetCategory) => (
-            <Menu.Item
-              id="closetCategory"
-              key={closetCategory}
-              name={closetCategory}
-              active={props.currentMenuItem === {closetCategory }}
-              onClick={props.handleItemClick}
-            >
-              {/*<Label color='teal'>{itemCount}</Label>*/}
-            </Menu.Item>
+          {props.closetCategories.map((closetCategory, index) => (
+            (index > 0) ?
+              <Menu.Item
+                id="closetCategory"
+                key={closetCategory}
+                name={closetCategory}
+                disabled={true}
+              >
+                {closetCategory} {<Label color='teal'>Pro</Label>}
+              </Menu.Item>
+              :
+              <Menu.Item
+                id="closetCategory"
+                key={closetCategory}
+                name={closetCategory}
+                active={(props.activeItem === closetCategory)}
+                onClick={props.handleItemClick}
+              >
+                {closetCategory}
+              </Menu.Item>
+
           ))}
         </Menu.Menu>
       </Menu.Item>
       <Menu.Item>
         <Menu.Header>My Outfits</Menu.Header>
         <Menu.Menu>
-          {props.outfitCategories.map((outfitCategory) => (
+          {props.outfitCategories.map((outfitCategory, index) => (
+            (index > 0) ?
             <Menu.Item
               id="outfitCategory"
               key={outfitCategory}
               name={outfitCategory}
-              active={props.currentMenuItem === {outfitCategory}}
-              onClick={props.handleItemClick}
+              disabled={true}
             >
-              {/*<Label color='teal'>{itemCount}</Label>*/}
+              {outfitCategory} {<Label color='teal'>Pro</Label>}
             </Menu.Item>
+              :
+              <Menu.Item
+                id="outfitCategory"
+                key={outfitCategory}
+                name={outfitCategory}
+                active={(props.activeItem === outfitCategory)}
+                onClick={props.handleItemClick}
+              >
+                {outfitCategory}
+              </Menu.Item>
           ))}
         </Menu.Menu>
       </Menu.Item>

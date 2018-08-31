@@ -79,8 +79,8 @@ export function updateAllOutfits(outfits) {
     type: ALL_OUTFITS,
     outfits
   };
-}  
-  
+}
+
 export function updateDropdownInfo(colors, categories, styles) {
   return {
     type: ALL_DROPDOWN_INFO,
