@@ -26,10 +26,10 @@ class OutfitsContainer extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return {
+  return ({
     allItemsArray: state.closet.allItemsArray,
     allOutfits: state.closet.allOutfits
-  };
+  });
 };
 
 const mapDispatchToProps = dispatch => ({
