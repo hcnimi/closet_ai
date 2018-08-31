@@ -1,9 +1,17 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Card, Image, Grid, Button, Header } from 'semantic-ui-react';
+import Axios from 'axios';
+import { updateAllOutfits } from '../../../actions/myClosetActions';
 
 class Outfit extends React.Component {
+  constructor(props) {
+    super(props);
+    this.deleteOutfit = this.deleteOutfit.bind(this);
+  }
+
   getItemFromId(id) {
     let items = this.props.allItemsArray;
     for (let i = 0; i < items.length; i++) {
@@ -15,7 +23,14 @@ class Outfit extends React.Component {
   }
 
   deleteOutfit() {
-    console.log('TODO delete outfit from db');
+    Axios.delete('/api/outfit', { params: { id: this.props.id } });
+    let newOutfits = []
+    this.props.allOutfits.forEach(outfit => {
+      if(outfit.id !== this.props.id) {
+        newOutfits.push(outfit);
+      }
+    })
+    this.props.actions.updateAllOutfits(newOutfits);
   }
 
   render() {
@@ -61,11 +76,14 @@ class Outfit extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    allItemsArray: state.closet.allItemsArray
+    allItemsArray: state.closet.allItemsArray,
+    allOutfits: state.closet.allOutfits
   };
 };
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators({ updateAllOutfits }, dispatch)
+});
 
 export default withRouter(
   connect(

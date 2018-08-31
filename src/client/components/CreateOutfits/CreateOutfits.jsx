@@ -75,7 +75,7 @@ export class CreateOutfits extends React.Component {
     if (itemKeys.length === 0) {
       return;
     }
-    Axios.post('/api/saveoutfit', {
+    Axios.post('/api/outfit', {
       items: itemKeys.map(id => ({
         id: parseInt(id)
       })),

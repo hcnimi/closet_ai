@@ -376,6 +376,18 @@ const dbHelpers = {
         }
     });
   },
+
+  removeOutfit: (id, closetId) => {
+    db.query(
+      'DELETE from "outfitsItems" ' +
+      'WHERE "outfitId"=\'' + id + '\';'
+    ).then(()=>{
+      db.query(
+        'DELETE from outfits ' +
+        'WHERE id=\'' + id + '\';'
+      );
+    });
+  },
   makeOutfitBySeason: async (season, cb) => {
     let outfit = {};
     let seasonInstance = await Season.findOne({
@@ -454,9 +466,14 @@ const dbHelpers = {
   },
   deleteItem(item, cb) {
     db.query(
-      'DELETE from items ' +
-      'WHERE id=\'' + item.id + '\';'
-    ).then(() => {
+      'DELETE from outfitsItems ' +
+      'WHERE id=\'' + id + '\';'
+    ).then(()=>{
+      db.query(        
+        'DELETE from items ' +
+        'WHERE id=\'' + item.id + '\';'
+      )
+    }).then(() => {
       this.getItems(null, cb);
     });
   }
