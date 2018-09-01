@@ -15,6 +15,7 @@ import {
   toggleItemColorField,
   toggleItemStyleField,
   updateItemValue,
+  toggleSaveButtonState,
   toggleDeleteButtonState,
 } from '../../actions/modalActions';
 import {
@@ -53,6 +54,7 @@ class ItemModal extends React.Component {
     this.close=this.close.bind(this);
     this.toggleDeleteButtonState=this.toggleDeleteButtonState.bind(this);
     this.handleDropdownChange=this.handleDropdownChange.bind(this);
+    this.toggleSaveButtonState=this.toggleSaveButtonState.bind(this);
   }
 
   createItemsArray(response) {
@@ -168,8 +170,15 @@ class ItemModal extends React.Component {
     //make server call to edit the item
   }
 
-  saveItem() {
-    this.editItem(this.props.currentModalItem);
+  toggleSaveButtonState(){
+    return this.props.actions.toggleSaveButtonState(!this.props.saveButtonState);
+  }
+
+  saveItem(e) {
+    e.preventDefault();
+    this.toggleSaveButtonState().then(() => {
+      this.editItem(this.props.currentModalItem);
+    });
   }
 
   removeItem(e) {
@@ -189,6 +198,7 @@ class ItemModal extends React.Component {
     this.props.actions.toggleItemPurchaseDateField(false);
     this.props.actions.updatedModalState(false, {});
     this.props.actions.toggleDeleteButtonState(false);
+    this.props.actions.toggleSaveButtonState(false);
   }
 
 
@@ -325,7 +335,13 @@ class ItemModal extends React.Component {
               </div>
             </Modal.Description>
           </Modal.Content>
-          <Button color='green' style={inlineStyle.saveButton} onClick={this.saveItem}>Save</Button>
+          <Button
+            color='green'
+            style={inlineStyle.saveButton}
+            onClick={this.saveItem}
+            disabled={this.props.saveButtonState}
+            loading={this.props.saveButtonState}
+          >Save</Button>
           <Button
             color='red'
             disabled={this.props.deleteButtonState}
@@ -366,6 +382,7 @@ const mapStateToProps = state => {
     allColors: state.closet.allColors,
     allCategories: state.closet.allCategories,
     deleteButtonState: state.item.deleteButtonState,
+    saveButtonState: state.item.saveButtonState,
   }
 };
 
@@ -380,6 +397,7 @@ const mapDispatchToProps = dispatch => ({
     toggleItemColorField,
     toggleItemStyleField,
     toggleDeleteButtonState,
+    toggleSaveButtonState,
     updateItemValue,
     updateAllItems,
     updateSelectedItems,

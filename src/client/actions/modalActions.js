@@ -14,6 +14,7 @@ export const EDIT_ITEM_PURCHASE_DATE_TOGGLE = 'EDIT_ITEM_PURCHASE_DATE_TOGGLE';
 export const EDIT_ITEM_COLOR_TOGGLE = 'EDIT_ITEM_COLOR_TOGGLE';
 export const UPDATE_ITEM_VALUE = 'UPDATE_ITEM_VALUE';
 export const TOGGLE_DELETE_BUTTON_STATE = 'TOGGLE_DELETE_BUTTON_STATE';
+export const TOGGLE_SAVE_BUTTON_STATE = 'TOGGLE_SAVE_BUTTON_STATE';
 
 
 /*
@@ -100,6 +101,20 @@ function toggleDeleteButtonStateEffect(value) {
 export function toggleDeleteButtonState(value) {
   return (dispatch) => {
     dispatch(toggleDeleteButtonStateEffect(value));
+    return Promise.resolve();
+  };
+}
+
+function toggleSaveButtonStateEffect(value) {
+  return {
+    type: TOGGLE_SAVE_BUTTON_STATE,
+    value,
+  };
+}
+
+export function toggleSaveButtonState(value) {
+  return (dispatch) => {
+    dispatch(toggleSaveButtonStateEffect(value));
     return Promise.resolve();
   };
 }

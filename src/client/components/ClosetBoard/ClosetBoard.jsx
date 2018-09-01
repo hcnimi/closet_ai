@@ -14,15 +14,15 @@ export class ClosetBoard extends React.Component {
   render() {
     return (
       <div>
-        <Grid stretched={true} columns={2} verticalAlign='top' divided={true} padded>
-          <Grid.Row verticalAlign='top' stretched>
-            <Grid.Column>
-              <Header> Today's Recommended Outfit </Header>
-              <RecommendedOutfits id='recommendedOutfits'/>
+        <Grid stretched={false} columns={2} verticalAlign="top" divided={false} padded>
+          <Grid.Row verticalAlign="top">
+            <Grid.Column width={6} textAlign="center">
+                <Header> Today's Recommended Outfit </Header>
+                <RecommendedOutfits id="recommendedOutfits"/>
             </Grid.Column>
-            <Grid.Column>
-              <Header> Weather </Header>
-              <Weather id='weather' />
+            <Grid.Column width={6} textAlign="center">
+              <Header> Today's Weather </Header>
+              <Weather id="weather" />
             </Grid.Column>
           </Grid.Row>
           {/*<Grid.Row verticalAlign='top' stretched>*/}

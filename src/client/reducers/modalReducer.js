@@ -9,6 +9,7 @@ import {
   EDIT_ITEM_STYLE_TOGGLE,
   UPDATE_ITEM_VALUE,
   TOGGLE_DELETE_BUTTON_STATE,
+  TOGGLE_SAVE_BUTTON_STATE,
 } from '../actions/modalActions';
 
 // TODO: this is temporary, need to figure out what the default state will be
@@ -23,6 +24,7 @@ const initialState = {
   colorToggle: false,
   styleToggle: false,
   deleteButtonState: false,
+  saveButtonState: false,
 };
 
 export function modalReducer(state = initialState, action) {
@@ -67,7 +69,11 @@ export function modalReducer(state = initialState, action) {
     case TOGGLE_DELETE_BUTTON_STATE:
       return Object.assign({}, state, {
         deleteButtonState: action.value
-      })
+      });
+    case TOGGLE_SAVE_BUTTON_STATE:
+      return Object.assign({}, state, {
+        saveButtonState: action.value
+      });
     default:
       return state;
   }

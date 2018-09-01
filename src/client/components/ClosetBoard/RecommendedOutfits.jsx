@@ -67,7 +67,7 @@ export class RecommendedOutfits extends React.Component {
       marginBottom: '1em',
     };
     return (
-      <Card.Group itemsPerRow={3}>
+      <Card.Group itemsPerRow={3} centered>
         <Card fluid={true} centered={true}>
           {
             !this.props.recommendedOutfits ?
