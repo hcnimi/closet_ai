@@ -14,8 +14,8 @@ export class ClosetBoard extends React.Component {
   render() {
     return (
       <div>
-        <Grid stretched={true} columns={2} verticalAlign='middle' divided={true}>
-          <Grid.Row verticalAlign='middle' stretched>
+        <Grid stretched={true} columns={2} verticalAlign='top' divided={true} padded>
+          <Grid.Row verticalAlign='top' stretched>
             <Grid.Column>
               <Header> Today's Recommended Outfit </Header>
               <RecommendedOutfits id='recommendedOutfits'/>
@@ -25,7 +25,7 @@ export class ClosetBoard extends React.Component {
               <Weather id='weather' />
             </Grid.Column>
           </Grid.Row>
-          {/*<Grid.Row verticalAlign='middle' stretched>*/}
+          {/*<Grid.Row verticalAlign='top' stretched>*/}
             {/*<Grid.Column>*/}
               {/*<Header> Recently Added Outfits </Header>*/}
               {/*<RecentlyAddedOutfits id='recentlyAddedOutfits'/>*/}

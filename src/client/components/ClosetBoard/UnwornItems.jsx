@@ -12,19 +12,25 @@ class UnwornItems extends React.Component {
   }
 
   render() {
+    const styles = {
+      marginTop: '2em',
+      marginBottom: '1em',
+    };
     return (
       <Card.Group itemsPerRow={2}>
+        <Card fluid={true} centered={true}>
         {
           this.props.unwornItems.length !== 0 ? this.props.unwornItems.map((item) => (
             <Item key={item.id} name={item.name} image={item.url}/>
           ))
           :
-          <Segment>
+          <Card.Content style={styles}>
             <Dimmer active inverted>
-              <Loader inverted>Thinking</Loader>
+              <Loader inverted>Loading...</Loader>
             </Dimmer>
-          </Segment>
+          </Card.Content>
         }
+        </Card>
       </Card.Group>
     );
   }
