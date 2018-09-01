@@ -58,6 +58,7 @@ export class Login extends React.Component {
             <Form.Input name="password"
                         fluid
                         label="password"
+                        type="password"
                         placeholder="password" required
                         errorLabel={ <Label color="red" pointing/> }
                         validationErrors={{

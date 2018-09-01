@@ -35,7 +35,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => { //todo: handle pri
   return (
     <Route {...rest} render={matchProps => (
       <div className="PrivateRoute">
-        <Header />
 
         <Component {...matchProps} />
       </div>
@@ -66,13 +65,13 @@ class App extends React.Component {
           <Provider store={store}>
             <div className="content container">
               <DefaultLayout exact={true} path="/" component={ClosetBoard} store={store} />
-              <DefaultLayout exact={true} path="/signup" component={Signup} store={store} />
-              <DefaultLayout exact={true} path="/login" component={Login} store={store} />
-              <PrivateRoute exact={true} path="/mycloset" component={MyCloset} store={store} />
-              <PrivateRoute exact={true} path="/closetboard" component={ClosetBoard} store={store} />
-              <PrivateRoute exact={true} path="/recommendedoutfits" component={RecommendedOutfits} store={store} />
-              <PrivateRoute exact={true} path="/createoutfits" component={CreateOutfits} store={store} />
-              <PrivateRoute exact={true} path="/additem" component={AddItem} store={store} />
+              <PrivateRoute exact={true} path="/signup" component={Signup} store={store} />
+              <PrivateRoute exact={true} path="/login" component={Login} store={store} />
+              <DefaultLayout exact={true} path="/mycloset" component={MyCloset} store={store} />
+              <DefaultLayout exact={true} path="/closetboard" component={ClosetBoard} store={store} />
+              <DefaultLayout exact={true} path="/recommendedoutfits" component={RecommendedOutfits} store={store} />
+              <DefaultLayout exact={true} path="/createoutfits" component={CreateOutfits} store={store} />
+              <DefaultLayout exact={true} path="/additem" component={AddItem} store={store} />
             </div>
           </Provider>
         </Router>
