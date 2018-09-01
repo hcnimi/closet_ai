@@ -25,8 +25,6 @@ export class UploadItemInfo extends React.Component {
   }
 
   submitForm() {
-    //TODO: axios call to save to DB
-    // pass style.id in params
     Axios.post('/uploaditem', {
       item: {
         brand: this.props.formStates.brand,
@@ -65,7 +63,7 @@ export class UploadItemInfo extends React.Component {
           closeOnDimmerClick={false}
           trigger={<Button onClick={this.showModal}>Upload</Button>}
           onClose={this.closeModal}
-          open={this.getState()}
+          open={this.props.modalOpen}
           style={inlineStyle.modal}
         >
           <Modal.Content image>
