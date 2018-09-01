@@ -62,16 +62,20 @@ export class RecommendedOutfits extends React.Component {
   }
 
   render() {
+    const styles = {
+      marginTop: '2em',
+      marginBottom: '1em',
+    };
     return (
       <Card.Group itemsPerRow={3}>
         <Card fluid={true} centered={true}>
           {
             !this.props.recommendedOutfits ?
-              <Segment>
+              <Card.Content style={styles}>
                 <Dimmer active inverted>
-                  <Loader inverted>Thinking</Loader>
+                  <Loader inverted>Loading...</Loader>
                 </Dimmer>
-              </Segment>
+              </Card.Content>
               :
               <Outfit
                 top={this.props.recommendedOutfits.top}
