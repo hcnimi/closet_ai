@@ -37,8 +37,12 @@ export class SearchBarcode extends React.Component {
               <div>
                 <Header as="h2">Scan Success!</Header>
               </div>
-              <UploadItemInfo />
-              <Button onClick={this.clearItem}>Scan Again</Button>
+              <Grid padded={true}>
+                <Grid.Row>
+                  <UploadItemInfo />
+                  <Button onClick={this.clearItem}>Scan Again</Button>
+                </Grid.Row>
+              </Grid>
             </Grid.Column>
             :
             null
