@@ -62,8 +62,8 @@ export class UploadItemInfo extends React.Component {
           closeIcon
           closeOnDimmerClick={false}
           trigger={<Button onClick={this.showModal}>Upload</Button>}
-          onClose={this.closeModal}
           open={this.props.modalOpen}
+          onClose={this.closeModal}
           style={inlineStyle.modal}
         >
           <Modal.Content image>
@@ -86,7 +86,7 @@ const mapStateToProps = state => ({
   imageURL: state.addItem.imageURL,
   styles: state.addItem.styles,
   colors: state.addItem.colors,
-  modalOpen: state.addItem.modalState,
+  modalOpen: state.addItem.modalOpen,
   error: state.addItem.error,
   formStates: getFormValues('Upload')(state)
 });
