@@ -20,7 +20,7 @@ export class RecommendedOutfits extends React.Component {
   }
 
   componentDidMount() {
-    if (Object.keys(this.props.weather).length === 0) {
+    if (!Object.keys(this.props.weather).length === 0) {
       this.getRecommendedOutfits();
     }
   }
