@@ -65,8 +65,9 @@ class App extends React.Component {
         <Router>
           <Provider store={store}>
             <div className="content container">
-              <DefaultLayout exact={true} path="/" component={ClosetBoard} store={store} />
+              <DefaultLayout exact={true} path="/" component={Login} store={store} />
               <DefaultLayout exact={true} path="/signup" component={Signup} store={store} />
+              <DefaultLayout path="/home" component={ClosetBoard} store={store} />
               <DefaultLayout exact={true} path="/login" component={Login} store={store} />
               <PrivateRoute exact={true} path="/mycloset" component={MyCloset} store={store} />
               <PrivateRoute exact={true} path="/closetboard" component={ClosetBoard} store={store} />

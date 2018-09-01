@@ -403,12 +403,12 @@ const dbHelpers = {
       where: { $or: [{ name: 'Shorts' }, { name: 'Leggings' }, { name: 'Skirts' }]},
       raw: true
     });
-    let topsStyles = await seasonInstance.getStyles({ attributes: ['id', 'name'], where: { categoryId: topsCategoryId.id }, raw: true});
-    let bottomsStyles = await seasonInstance.getStyles({ attributes: ['id', 'name'], where: { categoryId: bottomsCategoryId.id }, raw: true});
+    // let topsStyles = await seasonInstance.getStyles({ attributes: ['id', 'name'], where: { categoryId: topsCategoryId.id }, raw: true});
+    // let bottomsStyles = await seasonInstance.getStyles({ attributes: ['id', 'name'], where: { categoryId: bottomsCategoryId.id }, raw: true});
     outfit.top = await Item.findOne({
-      where: { styleId: topsStyles[Math.floor(Math.random() * topsStyles.length)].id}, raw: true });
+      where: { $or: [{ styleId: 3 }, { styleId: 2 }, { styleId: 39 }, { styleId: 71 }]}, raw: true });
     outfit.bottom = await Item.findOne({
-      where: { styleId: bottomsStyles[Math.floor(Math.random() * bottomsStyles.length)].id}, raw: true });
+      where: { $or: [{ styleId: 23 }, { styleId: 41 }, { styleId: 42 }, { styleId: 68 }]}, raw: true });
     cb(outfit);
   },
   getStyles: (cb) => {

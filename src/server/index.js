@@ -63,6 +63,16 @@ const upload = multer({
   })
 });
 
+const checkUser = (req, res, next) => {
+  if (req.session.user) {
+    next();
+  } else {
+    res.redirect('/login');
+  }
+};
+app.get('/home', checkUser, (req, res) => {
+  res.sendFile(path.resolve(__dirname + '/../client/dist/index.html'));
+});
 app.post('/api/drop', upload.single('image'), (req, res, next) => {
   let params = {
     ACL: 'private',
@@ -178,19 +188,18 @@ app.post('/login', (req, res) => {
             res.status(200).end();
           });
         }
-      })
+      });
     }
   });
 });
 
-app.post('/logout', (req, res) => {
-  req.session.destroy(error => {
-    if (error) {
-      res.status(500).end();
-    } else {
-      res.redirect(200, '/');
-    }
-  });
+app.get('/logout', (req, res) => {
+  if (req.session) {
+    req.session.destroy((err) => {
+      res.clearCookie('connect.sid');
+      res.redirect('/');
+    });
+  }
 });
 
 app.get('/getitems', (req, res) => {

@@ -13,8 +13,8 @@ export class Login extends React.Component {
   }
 
   redirectToHome() {
-    this.props.history.push('/');
-  };
+    this.props.history.push('/home');
+  }
 
   handleSubmit(e) {
     let email = e.target.email.value;
