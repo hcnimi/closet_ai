@@ -102,7 +102,7 @@ export class CreateOutfits extends React.Component {
       <div>
         <Grid padded>
           <Grid.Row>
-            <Grid.Column width={6} stretched>
+            <Grid.Column width={3} stretched>
               <Card onDragOver={e => e.preventDefault()} onDrop={this.onDrop}>
                 <Card.Content extra>
                   <Button positive onClick={this.saveOutfit}>
@@ -139,7 +139,7 @@ export class CreateOutfits extends React.Component {
                 </Card.Content>
               </Card>
             </Grid.Column>
-            <Grid.Column width={10}>
+            <Grid.Column width={13}>
               <MyClosetItemsContainer drag />
             </Grid.Column>
           </Grid.Row>

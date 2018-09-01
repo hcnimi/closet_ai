@@ -40,7 +40,7 @@ export class MyCloset extends React.Component {
       <div>
         <Grid padded>
           <Grid.Row centered>
-            <Grid.Column mobile={16} computer={16} tablet={16} widescreen={3} largeScreen={3}>
+            <Grid.Column mobile={16} computer={16} tablet={16} widescreen={4} largeScreen={4}>
               <MyClosetNavBar
                 id="navBar"
                 handleItemClick={this.handleItemClick}
@@ -49,7 +49,7 @@ export class MyCloset extends React.Component {
                 outfitCategories={this.props.outfitCategories || []}
               />
             </Grid.Column>
-            <Grid.Column mobile={16} computer={16} tablet={16} widescreen={13} largeScreen={13}>
+            <Grid.Column mobile={16} computer={16} tablet={16} widescreen={12} largeScreen={12}>
               {this.props.currentMenuItem.includes('Outfit')
                 ? <OutfitsContainer />
                 : <MyClosetItemsContainer/>}
