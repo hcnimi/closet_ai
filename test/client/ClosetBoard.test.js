@@ -47,11 +47,11 @@ describe('ClosetBoard', () => {
     expect(wrapper.find('#recommendedOutfits').exists()).to.equal(true);
   });
 
-  it('renders RecentlyAddedOutfits component', () => {
-    expect(wrapper.find('#recentlyAddedOutfits').exists()).to.equal(true);
-  });
-
-  it('renders UnwornItems component', () => {
-    expect(wrapper.find('#unwornItems').exists()).to.equal(true);
-  });
+  // it('renders RecentlyAddedOutfits component', () => {
+  //   expect(wrapper.find('#recentlyAddedOutfits').exists()).to.equal(true);
+  // });
+  //
+  // it('renders UnwornItems component', () => {
+  //   expect(wrapper.find('#unwornItems').exists()).to.equal(true);
+  // });
 });

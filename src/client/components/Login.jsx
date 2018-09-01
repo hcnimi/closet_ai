@@ -1,17 +1,38 @@
 import React from 'react'
 import {Form, Grid, Label, Segment} from 'semantic-ui-react';
-import { Link, withRouter } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
-import { updateEmail, updateHash } from '../actions/userInfoActions';
-import { connect } from 'react-redux';
+import {Link, withRouter} from 'react-router-dom';
+import {bindActionCreators} from 'redux';
+import {updateAuthenticated, updateUserInfo} from '../actions/userInfoActions';
+import {connect} from 'react-redux';
+import Axios from 'axios';
 
 export class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(formData) {
+  redirectToHome() {
+    this.props.history.push('/');
+  };
+
+  handleSubmit(e) {
+    let email = e.target.email.value;
+    let password = e.target.password.value;
+
+    Axios.post('/login', {
+      email: email,
+      password: password
+    })
+      .then(response => {
+        this.props.actions.updateAuthenticated(true);
+        this.props.actions.updateUserInfo(response.data);
+
+        this.redirectToHome();
+      })
+      .catch(error => {
+        alert('There was an error logging in. Please try again.');
+      });
   }
 
   render() {
@@ -21,32 +42,32 @@ export class Login extends React.Component {
           <Form
             size="small"
             ref={ ref => this.form = ref }
-            onValidSubmit={ this.handleSubmit }
+            onSubmit={ this.handleSubmit }
           >
             <Form.Input name="email"
-              fluid
-              label="Email"
-              placeholder="Email" required
-              validations="isEmail"
-              errorLabel={ <Label color="red" pointing/> }
-              validationErrors={{
-                isEmail: 'Not a valid email',
-                isDefaultRequiredValue: 'Email is required'
-              }}
+                        fluid
+                        label="Email"
+                        placeholder="Email" required
+                        validations="isEmail"
+                        errorLabel={ <Label color="red" pointing/> }
+                        validationErrors={{
+                          isEmail: 'Not a valid email',
+                          isDefaultRequiredValue: 'Email is required'
+                        }}
             />
             <Form.Input name="password"
-              fluid
-              label="password"
-              placeholder="password" required
-              errorLabel={ <Label color="red" pointing/> }
-              validationErrors={{
-                isDefaultRequiredValue: 'Password is required'
-              }}
+                        fluid
+                        label="password"
+                        placeholder="password" required
+                        errorLabel={ <Label color="red" pointing/> }
+                        validationErrors={{
+                          isDefaultRequiredValue: 'Password is required'
+                        }}
             />
             <Form.Button content='Login' color='green' />
           </Form>
           <Segment>
-            No login? <Link className='signup' to='/signup'>Sign Up</Link>
+            Don't have an account? <Link className='signup' to='/signup'>Sign Up</Link>
           </Segment>
         </Grid.Column>
       </Grid>
@@ -56,15 +77,15 @@ export class Login extends React.Component {
 
 const mapStateToProps = state => {
   return ({
-    email: state.userInfo.email,
-    hash: state.userInfo.hash
+    userInfo: state.userInfo.userInfo,
+    authenticated: state.userInfo.authenticated
   });
 };
 
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({
-      updateEmail,
-      updateHash
+      updateUserInfo,
+      updateAuthenticated
     },
     dispatch)
 });

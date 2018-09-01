@@ -25,16 +25,16 @@ export class ClosetBoard extends React.Component {
               <Weather id='weather' />
             </Grid.Column>
           </Grid.Row>
-          <Grid.Row verticalAlign='middle' stretched>
-            <Grid.Column>
-              <Header> Recently Added Outfits </Header>
-              <RecentlyAddedOutfits id='recentlyAddedOutfits'/>
-            </Grid.Column>
-            <Grid.Column>
-              <Header> Items Not Worn Lately </Header>
-              <UnwornItems id='unwornItems'/>
-            </Grid.Column>
-          </Grid.Row>
+          {/*<Grid.Row verticalAlign='middle' stretched>*/}
+            {/*<Grid.Column>*/}
+              {/*<Header> Recently Added Outfits </Header>*/}
+              {/*<RecentlyAddedOutfits id='recentlyAddedOutfits'/>*/}
+            {/*</Grid.Column>*/}
+            {/*<Grid.Column>*/}
+              {/*<Header> Items Not Worn Lately </Header>*/}
+              {/*<UnwornItems id='unwornItems'/>*/}
+            {/*</Grid.Column>*/}
+          {/*</Grid.Row>*/}
         </Grid>
       </div>
     );

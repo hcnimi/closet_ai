@@ -2,7 +2,7 @@ import {
   UPDATE_RECENTLY_ADDED_OUTFITS,
   UPDATE_WEATHER,
   UPDATE_RECOMMENDED_OUTFITS,
-  UPDATE_UNWORN_ITEMS
+  UPDATE_UNWORN_ITEMS,
 } from '../actions/closetBoardActions';
 
 import { WEATHER, LOCATION } from '../actions/closetBoardActions';
@@ -11,7 +11,7 @@ const initialState = {
   weather: {},
   location: { error: 'Waiting for location...' },
   recentlyAddedOutfits: [],
-  unwornItems: []
+  unwornItems: [],
 };
 
 export function closetBoardReducer(state = initialState, action) {

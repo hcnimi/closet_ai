@@ -178,7 +178,6 @@ const dbHelpers = {
   },
   seedStylesSeasons: async () => { //join table
    for (let styleSeason of seed.stylesSeasons) {
-     console.log('styleseason', styleSeason);
      let style = await Style.findOne({ where: { name: styleSeason.style } });
      for (let i = 0; i < styleSeason.season.length; i++) {
        let seasonInstance = await Season.findOne({ where: { name: styleSeason.season[i] } });
@@ -478,6 +477,43 @@ const dbHelpers = {
       this.deleteOutfit(item, cb);
       this.getItems(null, cb);
     });
+  },
+  createUser(userData, cb) {
+    User.create({
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      email: userData.email,
+      hash: userData.password,
+      gender: userData.gender,
+      zip: userData.zip,
+      workZip: userData.workZip,
+      birthDate: userData.birthDate
+    })
+      .then(result => {
+        cb(result, null);
+      })
+      .catch(error => {
+        cb(null, error);
+      })
+  },
+  checkUserExists(email, cb) {
+    User.findOne({ attributes: ['email'], where: { email: email }, raw: true })
+      .then(result => {
+        cb(result, null);
+      })
+      .catch(error => {
+        cb(null, error);
+      })
+  },
+  getUser(email, cb) {
+    User.findOne({ where: { email: email }, raw: true })
+      .then(result => {
+        cb(result, null);
+      })
+      .catch(error => {
+        console.log('db catch error', error);
+        cb(null, error);
+      })
   }
 };
 

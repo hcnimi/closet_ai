@@ -14,7 +14,8 @@ const db = require('../database');
 const bcrypt = require('bcrypt-nodejs');
 const session = require('express-session');
 const bodyParser = require('body-parser');
-
+const cookieParser = require('cookie-parser');
+const uuidv4 = require('uuid/v4');
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -28,6 +29,17 @@ app.use((res, req, next) => {
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
   next();
 });
+
+app.use(cookieParser());
+app.use(session({
+  genid: (req) => {
+    return uuidv4();
+  },
+  secret: 'hal 2000',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 600000},
+}));
 
 const s3 = new AWS.S3({
   accessKeyId: accessKeyId,
@@ -120,30 +132,63 @@ app.get('/api/barcode', (req, res) => {
 });
 
 app.post('/signup', (req, res) => {
-  let userData = req.body;
-  bcrypt.hash(userData.password, null, null, (err, hash) => {
-    if (err) {
-      res.redirect(500, '/signup');
+  var userData = req.body;
+  bcrypt.hash(userData.password, null, null, (error, hash) => {
+    if (error) {
+      res.status(500).send('Sorry, there was a server error');
     }
     userData.password = hash;
   });
-  db.checkUserExists(userData.email, (err, result) => {
-    if (err) {
-      res.redirect(500, '/signup');
+  db.checkUserExists(userData.email, (result, error) => {
+    if (error) {
+      res.status(500).send('Sorry, there was a server error');
     }
-    if (result.length) {
-      res.status(500).send('username already exists!');
+    if (result) {
+      res.redirect(409, '/signup');
     } else {
-      db.createUser(userData, (err, result) => {
-        if (err) {
+      db.createUser(req.body, (result, error) => {
+        if (error) {
           res.redirect(500, '/signup');
         } else {
           req.session.regenerate(() => {
-            req.session.user = result.insertId;
-            res.redirect('/home');
+            req.session.user = result;
+            res.status(200).end();
           });
         }
       });
+    }
+  });
+});
+
+app.post('/login', (req, res) => {
+  let email = req.body.email;
+  let password = req.body.password;
+  db.getUser(email, (result, error) => {
+    if (error) {
+      res.redirect(500, '/login');
+    } else if (!result) {
+      res.status(401).send('An account with that email does not exist in our database');
+    } else {
+      bcrypt.compare(password, result.hash, (err, match) => {
+        if (!match) {
+          res.status(401).send('Password incorrect. Please try again');
+        } else {
+          req.session.regenerate(() => {
+            req.session.user = result;
+            res.status(200).end();
+          });
+        }
+      })
+    }
+  });
+});
+
+app.post('/logout', (req, res) => {
+  req.session.destroy(error => {
+    if (error) {
+      res.status(500).end();
+    } else {
+      res.redirect(200, '/');
     }
   });
 });
@@ -159,7 +204,6 @@ app.get('/getitems', (req, res) => {
       res.status(200).send(JSON.stringify(result));
     }});
 });
-
 
 app.get('/getoutfits', (req, res) => {
   let data = {

@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
   let activeItem = window.location.pathname;
+
+  //todo: conditionally render signup/login/logout depending on state
   return (
     <Menu>
       <Menu.Item
@@ -39,13 +41,22 @@ const Header = () => {
       <Menu.Menu position='right'>
         <Menu.Item
           as={Link}
+          to='/signup'
+          name='Signup'
+        />
+        <Menu.Item
+          as={Link}
+          to='/login'
+          name='login'
+        />
+        <Menu.Item
+          as={Link}
           to='/logout'
           name='logout'
         />
       </Menu.Menu>
     </Menu>
-
   );
-}
+};
 
 export default Header
