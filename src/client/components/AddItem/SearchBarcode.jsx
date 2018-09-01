@@ -26,23 +26,25 @@ export class SearchBarcode extends React.Component {
 
   render() {
     return (
-      <Grid columns="equal">
-        <Grid.Column width={14}>
-          <Button onClick={this.scan}>{this.props.status ? 'Stop Scan' : 'Start Scan'}</Button>
+      <Grid columns="equal" centered={true}>
+        <Grid.Column>
+          <Button fluid onClick={this.scan}>{this.props.status ? 'Stop Scan' : 'Start Scan'}</Button>
           {this.props.status ? <Scanner /> : null}
           {
             this.props.item
             ?
-            <Grid.Column>
+            <Grid.Column >
               <div>
-                <Header as="h2">Scan Success!</Header>
+                <Header as="h2" textAlign='center'>Scan Success!</Header>
               </div>
-              <Grid padded={true}>
+             <div>
+              <Grid padded={true} centered={true}>
                 <Grid.Row>
                   <UploadItemInfo />
                   <Button onClick={this.clearItem}>Scan Again</Button>
                 </Grid.Row>
               </Grid>
+              </div>
             </Grid.Column>
             :
             null

@@ -40,8 +40,8 @@ export class Scanner extends React.Component {
           type: 'LiveStream',
           numOfWorkers: navigator.hardwareConcurrency,
           constraints: {
-            width: 320,
-            height: 240,
+            width: 640,
+            height: 480,
             facingMode: "environment"
           }
         },
@@ -68,6 +68,7 @@ export class Scanner extends React.Component {
       <div
         id="interactive"
         className="viewport"
+        style={{'height': '50%', 'width': '50%', 'margin': '0 auto'}}
       />
     )
   }

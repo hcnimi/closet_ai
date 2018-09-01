@@ -43,10 +43,10 @@ export class AddItem extends React.Component {
 
   render() {
     const panes = [
-      { menuItem: 'Upload Item', render: () =>
-          <Tab.Pane>
-            <UploadItem />
-          </Tab.Pane> },
+      // { menuItem: 'Upload Item', render: () =>
+      //     <Tab.Pane>
+      //       <UploadItem />
+      //     </Tab.Pane> },
       { menuItem: 'Add via URL', render: () =>
           <Tab.Pane>
             <AddUrl />
