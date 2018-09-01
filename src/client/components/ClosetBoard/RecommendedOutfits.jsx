@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import {Card, Dimmer, Loader, Segment} from 'semantic-ui-react';
 import { updateRecommendedOutfits } from '../../actions/closetBoardActions';
 import Outfit from './Outfit.jsx';
+import outfitData from '../../../database/outfit_data.js';
 import Axios from 'axios';
 
 export class RecommendedOutfits extends React.Component {
@@ -44,7 +45,7 @@ export class RecommendedOutfits extends React.Component {
       }
     })
       .then(response => {
-        this.props.actions.updateRecommendedOutfits(response.data);
+        this.props.actions.updateRecommendedOutfits(outfitData.outfits);
       })
       .catch(error => {
         this.getRandomOutfits();
