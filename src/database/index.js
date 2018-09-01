@@ -406,9 +406,9 @@ const dbHelpers = {
     // let topsStyles = await seasonInstance.getStyles({ attributes: ['id', 'name'], where: { categoryId: topsCategoryId.id }, raw: true});
     // let bottomsStyles = await seasonInstance.getStyles({ attributes: ['id', 'name'], where: { categoryId: bottomsCategoryId.id }, raw: true});
     outfit.top = await Item.findOne({
-      where: { $or: [{ styleId: 3 }, { styleId: 2 }, { styleId: 39 }, { styleId: 71 }]}, raw: true });
+      where: { id: 39 }, raw: true });
     outfit.bottom = await Item.findOne({
-      where: { $or: [{ styleId: 23 }, { styleId: 41 }, { styleId: 42 }, { styleId: 68 }]}, raw: true });
+      where: { id: 23}, raw: true });
     cb(outfit);
   },
   getStyles: (cb) => {
