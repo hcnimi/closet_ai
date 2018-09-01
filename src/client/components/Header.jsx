@@ -22,12 +22,6 @@ const Header = () => {
       />
       <Menu.Item
         as={Link}
-        to='/calendar'
-        name='Calendar'
-        active={activeItem === '/calendar'}
-      />
-      <Menu.Item
-        as={Link}
         to='/createoutfits'
         name='Create Outfits'
         active={activeItem === '/createoutfits'}
