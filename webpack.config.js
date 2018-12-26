@@ -21,7 +21,7 @@ const moduleObj = {
       use: {
         loader: "babel-loader",
         query: {
-          presets: ['react', 'env']
+          presets: ['@babel/preset-env', '@babel/preset-react']
         }
       }
     },
