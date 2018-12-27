@@ -84,3 +84,6 @@ src/server/config.js
 
 # floobits
 .floo
+
+# vscode
+.vscode/
