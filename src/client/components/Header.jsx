@@ -1,8 +1,10 @@
 import React from 'react';
-import { Menu } from 'semantic-ui-react';
+import {Menu} from 'semantic-ui-react';
 import {Link, withRouter} from 'react-router-dom';
 import connect from 'react-redux/es/connect/connect';
 import Axios from 'axios';
+import {updateAuthenticated} from '../actions/userInfoActions';
+import {bindActionCreators} from 'redux';
 
 export class Header extends React.Component {
   constructor(props) {
@@ -13,9 +15,14 @@ export class Header extends React.Component {
   handleClick() {
     Axios.get('/logout')
       .then(response => {
-        this.props.history.push('/login');
+        this.props.actions.updateAuthenticated(false)
+        .then(() => {
+          this.props.history.push('/login');
+        })
       })
-      .catch(error => {
+      .catch(err => {
+        alert('Error logging out');
+        console.log('err logout', err);
         this.props.history.push('/login');
       });
   }
@@ -23,7 +30,7 @@ export class Header extends React.Component {
   render() {
     let activeItem = window.location.pathname;
     return (
-     !this.props.authenticated ?
+     !this.props.isAuthenticated ?
       (<Menu>
         <Menu.Item
           as={Link}
@@ -100,7 +107,11 @@ export class Header extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  authenticated: state.userInfo.authenticated
+  isAuthenticated: state.userInfo.isAuthenticated
 });
 
-export default withRouter(connect(mapStateToProps)(Header));
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators({updateAuthenticated}, dispatch)
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
