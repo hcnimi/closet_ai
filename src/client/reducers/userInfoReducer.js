@@ -1,5 +1,4 @@
-import { UPDATE_FIRST_NAME, UPDATE_LAST_NAME, UPDATE_EMAIL, UPDATE_HASH, UPDATE_GENDER, UPDATE_ZIP, UPDATE_WORK_ZIP, UPDATE_BIRTH_DATE, UPDATE_CLOSET_IDS_FOLLOWED, UPDATE_LOGGEDIN} from '../actions/userInfoActions';
-import { UPDATE_USER_INFO, UPDATE_AUTHENTICATED} from '../actions/userInfoActions';
+import {UPDATE_USER_INFO, UPDATE_AUTHENTICATED} from '../actions/userInfoActions';
 
 const initialState = {
   isAuthenticated: false

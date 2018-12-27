@@ -12,23 +12,21 @@ export class Login extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  redirectToHome() {
-    this.props.history.push('/home');
-  }
-
   handleSubmit(e) {
     let email = e.target.email.value;
     let password = e.target.password.value;
-
+    console.log('props in login', this.props);
     Axios.post('/login', {
       email: email,
       password: password
     })
       .then(response => {
-        this.props.actions.updateAuthenticated(true);
         this.props.actions.updateUserInfo(response.data);
-
-        this.redirectToHome();
+        this.props.actions.updateAuthenticated(true)
+        .then(() => {
+          console.log('*******pathname', this.props.location.pathname);
+          this.props.history.push(this.props.location.state);
+        })
       })
       .catch(error => {
         alert('There was an error logging in. Please try again.');
@@ -49,8 +47,8 @@ export class Login extends React.Component {
                         label="Email"
                         placeholder="Email" required
                         validations="isEmail"
-                        errorLabel={ <Label color="red" pointing/> }
-                        validationErrors={{
+                        errorlabel={ <Label color="red" pointing/> }
+                        validationerrors={{
                           isEmail: 'Not a valid email',
                           isDefaultRequiredValue: 'Email is required'
                         }}
@@ -60,8 +58,8 @@ export class Login extends React.Component {
                         label="password"
                         type="password"
                         placeholder="password" required
-                        errorLabel={ <Label color="red" pointing/> }
-                        validationErrors={{
+                        errorlabel={ <Label color="red" pointing/> }
+                        validationerrors={{
                           isDefaultRequiredValue: 'Password is required'
                         }}
             />
