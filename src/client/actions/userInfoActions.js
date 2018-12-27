@@ -14,9 +14,15 @@ export function updateUserInfo(userInfo) {
   };
 }
 
-export function updateAuthenticated(authenticated) {
-  return {
-    type: UPDATE_AUTHENTICATED,
-    authenticated
-  };
+export function updateAuthenticated(isAuthenticated) {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      dispatch({
+        type: UPDATE_AUTHENTICATED,
+        isAuthenticated
+      });
+
+      resolve();
+    });
+  }
 }

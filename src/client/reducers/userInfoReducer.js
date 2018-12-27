@@ -2,7 +2,7 @@ import { UPDATE_FIRST_NAME, UPDATE_LAST_NAME, UPDATE_EMAIL, UPDATE_HASH, UPDATE_
 import { UPDATE_USER_INFO, UPDATE_AUTHENTICATED} from '../actions/userInfoActions';
 
 const initialState = {
-  authenticated: false
+  isAuthenticated: false
 };
 
 export function userInfoReducer(state = initialState, action) {
@@ -13,7 +13,7 @@ export function userInfoReducer(state = initialState, action) {
       });
     case UPDATE_AUTHENTICATED:
       return Object.assign({}, state, {
-        authenticated: action.authenticated
+        isAuthenticated: action.isAuthenticated
       });
     default:
       return state;
