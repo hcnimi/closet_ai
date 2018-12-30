@@ -15,7 +15,7 @@ export class Login extends React.Component {
   handleSubmit(e) {
     let email = e.target.email.value;
     let password = e.target.password.value;
-    console.log('props in login', this.props);
+    
     Axios.post('/login', {
       email: email,
       password: password
@@ -24,7 +24,6 @@ export class Login extends React.Component {
         this.props.actions.updateUserInfo(response.data);
         this.props.actions.updateAuthenticated(true)
         .then(() => {
-          console.log('*******pathname', this.props.location.pathname);
           this.props.history.push(this.props.location.state);
         })
       })
